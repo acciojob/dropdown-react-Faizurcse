@@ -166,8 +166,8 @@ function App() {
     : null;
 
   return (
-    <div id="main">
-      <select id="state-title" onChange={handleStateChange} value={selectedState}>
+    <div id="state-title" >
+      <select id="state" onChange={handleStateChange} value={selectedState}>
         {states.map((state, index) => (
           <option key={index} value={index}>
             {state.name}
