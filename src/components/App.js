@@ -1,5 +1,4 @@
-import React, { useState,useReducer } from "react";
-import "./../styles/App.css";
+import React, { useState } from "react";
 
 
 const states = [{
@@ -137,16 +136,85 @@ const states = [{
 	}]
 }];
 
+function App() {
+  const [selectedState, setSelectedState] = useState(0);
+  const [selectedCity, setSelectedCity] = useState(0);
+  const [selectedLandmark, setSelectedLandmark] = useState(0);
 
-function App() 
-{
-	// Do not alter/remove main div
-	return (
-	<div id="main">
-		
-	</div>
-	);
+  const handleStateChange = (e) => {
+    const stateIndex = parseInt(e.target.value);
+    setSelectedState(stateIndex);
+    setSelectedCity(0); // Reset city selection when state changes
+    setSelectedLandmark(0); // Reset landmark selection when state changes
+  };
+
+  const handleCityChange = (e) => {
+    const cityIndex = parseInt(e.target.value);
+    setSelectedCity(cityIndex);
+    setSelectedLandmark(0); // Reset landmark selection when city changes
+  };
+
+  const handleLandmarkChange = (e) => {
+    const landmarkIndex = parseInt(e.target.value);
+    setSelectedLandmark(landmarkIndex);
+  };
+
+  const selectedStateData = states[selectedState];
+  const selectedCityData = selectedStateData.city[selectedCity];
+  const selectedLandmarkData = selectedCityData
+    ? selectedCityData.landmarks[selectedLandmark]
+    : null;
+
+  return (
+    <div id="main">
+      <select id="state" onChange={handleStateChange} value={selectedState}>
+        {states.map((state, index) => (
+          <option key={index} value={index}>
+            {state.name}
+          </option>
+        ))}
+      </select>
+
+      <select id="city" onChange={handleCityChange} value={selectedCity}>
+        {selectedStateData &&
+          selectedStateData.city.map((city, index) => (
+            <option key={index} value={index}>
+              {city.name}
+            </option>
+          ))}
+      </select>
+
+      <select
+        id="landmark"
+        onChange={handleLandmarkChange}
+        value={selectedLandmark}
+      >
+        {selectedCityData &&
+          selectedCityData.landmarks.map((landmark, index) => (
+            <option key={index} value={index}>
+              {landmark.name}
+            </option>
+          ))}
+      </select>
+
+      <div id="state-name">
+        {selectedStateData && selectedStateData.name}
+      </div>
+      <div id="state-description">
+        {selectedStateData && selectedStateData.description}
+      </div>
+      <div id="city-name">{selectedCityData && selectedCityData.name}</div>
+      <div id="city-description">
+        {selectedCityData && selectedCityData.description}
+      </div>
+      <div id="landmark-name">
+        {selectedLandmarkData && selectedLandmarkData.name}
+      </div>
+      <div id="landmark-description">
+        {selectedLandmarkData && selectedLandmarkData.description}
+      </div>
+    </div>
+  );
 }
-
 
 export default App;
