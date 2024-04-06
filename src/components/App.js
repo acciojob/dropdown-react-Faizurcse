@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 
-
 const states = [{
 	name : "Madhya Pradesh",
 	description:"Madhya Pradesh, a large state in central India, retains landmarks from eras throughout Indian history.",
@@ -136,6 +135,8 @@ const states = [{
 	}]
 }];
 
+
+
 function App() {
   const [selectedState, setSelectedState] = useState(0);
   const [selectedCity, setSelectedCity] = useState(0);
@@ -166,7 +167,7 @@ function App() {
     : null;
 
   return (
-    <div id="state-title" >
+    <div id="main">
       <select id="state" onChange={handleStateChange} value={selectedState}>
         {states.map((state, index) => (
           <option key={index} value={index}>
